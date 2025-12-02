@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema({
-    username:{
+    Username:{
         type:String,
         required:true,
         lowercase:true,
@@ -17,7 +17,7 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
-    kuid:{
+    Kuid:{
         type:Number,
         required:true,
     },
