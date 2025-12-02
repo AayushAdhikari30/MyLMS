@@ -1,6 +1,6 @@
 How to run code !!! 
 
-it's easy u just need to close this repo and after cloning 
+it's easy u just need to clone this repo and after cloning 
 
 
 -for backend (express)
