@@ -9,4 +9,4 @@ router.route("/register").post(registerUser)
 
 
 
-export {router}
+export default router

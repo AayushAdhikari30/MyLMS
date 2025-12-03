@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-// import './loginpage.css';
+import './loginpage.css';
 // Ai use handeko mailai
 export default function RegisterApp() {
   const [formData, setFormData] = useState({

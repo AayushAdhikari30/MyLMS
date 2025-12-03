@@ -15,13 +15,21 @@ app.use(express.json({
 app.use(express.urlencoded({
     limit:"10kb"
 }))
+
+
 // router  logic
+import Userrouter from './routes/user.routes.js';
 
+// user register or login route
+app.use('/api/v1/users',Userrouter)
 
-import { router } from './routes/user.routes.js';
+// user books register or CRUD operation
+import BookRouter from './routes/book.routes.js'
+app.use('/api/v1/books',BookRouter)
 
-
-app.use('/api/v1/users',router)
+// default routes
+import router from './routes/user.routes.js';
+app.use('/api/v1',router)
 
 
 
