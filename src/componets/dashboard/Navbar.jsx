@@ -1,14 +1,17 @@
-import React ,{useEffect,useState}from 'react'
+
+import React ,{useEffect,useState,useContext}from 'react'
 import axios from 'axios'
 import { getUser } from '../../fetch'
-import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/authcontext';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Navbar = () => {
-  const navigate = useNavigate()
-  const handleclick=() => {
-navigate('/login')
-  }
+
+  const {logout} = useContext(AuthContext);
+ const navigate = useNavigate();
+
   const [data,setData] = useState([]);
   useEffect(() => {
     getUser().then(posts => setData(posts))
@@ -21,9 +24,11 @@ navigate('/login')
 </p>
 
       <button 
-        onClick={handleclick}
+         onClick={() => {
+    logout();
+    navigate('/login'); 
         className='bg-teal-700 hover:bg-teal-800 px-4 py-2 rounded-md transition-colors duration-200'
-        
+         }}
       >
         Logout
       </button>
