@@ -25,7 +25,6 @@ userSchema.pre("save",
    async function(){
     if(!this.isModified("password1")) return ;
     this.password1 = await bcrypt.hash(this.password1,10)
- 
    }
 )
 

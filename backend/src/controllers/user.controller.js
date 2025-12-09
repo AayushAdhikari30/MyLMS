@@ -1,9 +1,6 @@
 import { asyncHandler } from "../utils/asynchandler.js";
 import { User } from "../models/user.model.js";
 
-
-
-
 const registerUser = asyncHandler(async (req, res) => {
     
 
@@ -104,4 +101,4 @@ const loginUser= asyncHandler(
 
 
 
-export default {registerUser,loginUser};
+export  {registerUser,loginUser};
