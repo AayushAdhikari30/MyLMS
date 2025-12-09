@@ -4,6 +4,7 @@ const StudentDashboard = () => {
   return (
     <div>
       <Studentsidebar/>
+      <h1>Hello</h1>
     </div>
   )
 }

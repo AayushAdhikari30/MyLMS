@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authcontext';
-import Register from './Register';
+
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -24,14 +24,15 @@ const Login = () => {
 
     try {
       const response = await axios.post("http://localhost:8000/api/v1/users/login", {
-        studentemail1: email,
+        studentemail: email,
         Password:  password,
         role: loginType
       });
       
       if(response.data.success) {
         login(response.data.user);
-        alert("Successfully Logged In");
+        // no need to alert user about login user
+        // alert("Successfully Logged In");
         
         if(loginType === 'admin') {
           navigate('/admin-dashboard');

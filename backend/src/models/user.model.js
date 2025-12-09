@@ -13,6 +13,10 @@ const userSchema = new Schema({
         type:String,
         requrired:true,
         trim:true
+    },
+    role:{
+        type:String,
+        required:true
     }
     
   

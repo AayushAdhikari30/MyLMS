@@ -1,14 +1,17 @@
 import { asyncHandler } from "../utils/asynchandler.js";
 import { User } from "../models/user.model.js";
+import bcrypt from "bcrypt"
 
 const registerUser = asyncHandler(async (req, res) => {
     
 
     
     //Handle user inputs from frontend as objects 
-    const {studentemail , Password} = req.body
+    const {studentemail , Password , role} = req.body
     console.log(studentemail)
     console.log(Password)
+    
+    
 
     // validations of correct format for empty
     if(Object.values({studentemail,Password}).some(data =>String(data)?.trim()=="" )){
@@ -42,7 +45,8 @@ const registerUser = asyncHandler(async (req, res) => {
      // saving data in database 
     const NewUser =  await User.create({
         studentemail1:studentemail  ,
-        password1:Password  
+        password1:Password  ,
+        role:role
     })
 
     
@@ -60,18 +64,22 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser= asyncHandler(
     async (req,res) =>{
         // check ussername and login info
-        const {studentemail,Password} = req.body
+        const {studentemail,Password,role} = req.body
+        // check code working 
+        // console.log(studentemail)
+        // console.log(Password)
 
         // check empty or not 
-       if(!studentemail|| !Password ){
+       if(!studentemail|| !Password || !role ){
         return res.status(400).json({
             messege:"empty string"
         })
        }
 
-       // check user 
+       // check user and role 
        const existUser = await User.findOne({
-        studentemail1:studentemail
+        studentemail1:studentemail,
+        role:role
        })
 
        if(!existUser){
@@ -90,10 +98,12 @@ const loginUser= asyncHandler(
        }
 
        return res.status(200).json({
+        success:true,
         message:"Login sucessfull" ,
         user:{
             id: existUser._id,
-            email:existUser.studentemail1
+            email:existUser.studentemail1,
+            role: existUser.role
         }
        })
 

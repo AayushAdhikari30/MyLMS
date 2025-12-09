@@ -4,11 +4,12 @@ import axios from 'axios';
 
 const Register = () => {
   const navigate = useNavigate();
-  const location = useLocation(); 
-  
-  // Get the initialUser from navigation state
-  const initialRole = location.state?.initialUser || 'student'; 
-  
+  const location = useLocation();
+
+  const initialRole = location.state?.initialUser || 'student';
+
+  const [selectedRole, setSelectedRole] = useState(initialRole);
+
   const [formData, setFormData] = useState({
     email: '',
     confirmEmail: '',
@@ -18,6 +19,7 @@ const Register = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData({
@@ -62,12 +64,12 @@ const Register = () => {
 
     try {
       const response = await axios.post('http://localhost:8000/api/v1/users/register', {
-        studentemail: formData.email,        
-        Password: formData.password,           
-        role: initialRole     // not specified                 
+        studentemail: formData.email,
+        Password: formData.password,
+        role: selectedRole
       });
 
-    
+
       if (response.data.user) {
         navigate('/login', {
           state: { message: 'Registration successful! Please login.' }
@@ -76,7 +78,7 @@ const Register = () => {
 
     } catch (error) {
       console.error('Registration error:', error);
-     
+
       setError(error.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -86,7 +88,6 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Back to Login */}
         <button
           onClick={() => navigate('/login')}
           className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors group"
@@ -97,9 +98,7 @@ const Register = () => {
           Back to Login
         </button>
 
-        {/* Main Card */}
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-white">
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +111,6 @@ const Register = () => {
             <p className="text-gray-600">Create your account to get started</p>
           </div>
 
-          {/* Error Alert */}
           {error && (
             <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
               <div className="flex items-start gap-3">
@@ -124,9 +122,39 @@ const Register = () => {
             </div>
           )}
 
-          {/* Form */}
+          <div className="mb-6">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Select Role
+            </label>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={() => setSelectedRole('student')}
+                disabled={isLoading}
+                className={`flex-1 py-2 px-4 text-sm font-medium rounded-xl transition-all ${
+                  selectedRole === 'student'
+                    ? 'bg-violet-600 text-white shadow-md shadow-violet-500/30'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                } disabled:opacity-50`}
+              >
+                📚 Student
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole('admin')}
+                disabled={isLoading}
+                className={`flex-1 py-2 px-4 text-sm font-medium rounded-xl transition-all ${
+                  selectedRole === 'admin'
+                    ? 'bg-purple-600 text-white shadow-md shadow-purple-500/30'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+                } disabled:opacity-50`}
+              >
+                👑 Admin
+              </button>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">
                 Email Address
@@ -150,7 +178,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Confirm Email */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">
                 Confirm Email Address
@@ -174,7 +201,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Password */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">
                 Password
@@ -215,7 +241,6 @@ const Register = () => {
               <p className="text-xs text-gray-500">At least 8 characters</p>
             </div>
 
-            {/* Confirm Password */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">
                 Confirm Password
@@ -239,7 +264,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -259,7 +283,6 @@ const Register = () => {
             </button>
           </form>
 
-          {/* Sign In Link */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
@@ -275,7 +298,6 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Trust Indicators */}
         <div className="mt-8 flex items-center justify-center gap-6 text-xs text-gray-500">
           <div className="flex items-center gap-1.5">
             <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
