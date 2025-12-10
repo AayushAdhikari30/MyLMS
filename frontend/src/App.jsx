@@ -3,21 +3,22 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard"
 import Authcontext from './context/authcontext'
-import CreateUser from './pages/CreateUser'
 
 import Members from "./admin/Members";
 import Books from "./admin/AdminBooks";
 import Issued from "./admin/Issused";       
 import ReturnedBooks from "./admin/AdminReturned";
 import NotReturnedBooks from "./admin/AdminNotReturn";
+import Register from "./pages/Register";
 function App() {
   return (
     <Authcontext>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/admin-dashboard" />}></Route>
+          <Route path="/" element={<Navigate to="/login" />}></Route>
           <Route path="/login" element={<Login />}/>
-          <Route path="/create-account" element={<CreateUser/>} />
+           <Route path="/register" element={<Register/>}/>
+
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route index element={<div className="text-2xl font-bold">Welcome to Admin Dashboard!</div>} />
               <Route path="members" element={<Members />} />
